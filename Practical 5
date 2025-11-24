@@ -1,0 +1,38 @@
+Practical No.5 Code 
+library(dplyr)
+library(readr)
+
+
+delivery <- read_csv("topics.csv")
+
+
+
+delivery_sorted_name <- delivery |>
+  arrange(name)
+
+head(delivery_sorted_name, 5)
+
+
+
+delivery_sorted_keywords <- delivery |>
+  mutate(keyword_count = lengths(strsplit(keywords, ","))) |>
+  arrange(desc(keyword_count))
+
+head(delivery_sorted_keywords, 5)
+
+
+
+delivery_multi_sort <- delivery |>
+  mutate(keyword_count = lengths(strsplit(keywords, ","))) |>
+  arrange(name, desc(keyword_count))
+
+head(delivery_multi_sort, 10)
+
+
+
+robot_related <- delivery |>
+  filter(grepl("robot", keywords, ignore.case = TRUE))
+
+robot_related |>
+  select(name, keywords) |>
+  head(5)
